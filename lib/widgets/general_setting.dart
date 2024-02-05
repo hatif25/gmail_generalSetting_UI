@@ -37,8 +37,13 @@ class _GeneralSettingState extends State<GeneralSetting> {
     // Add more countries as needed
   ];
 
-  List<String> starsInUse = ['⭐', '⭐⭐', '⭐⭐⭐']; // Stars in use
-  List<String> starsNotInUse = ['⭐⭐⭐⭐', '⭐⭐⭐⭐⭐']; // Stars not in use
+  List<String> starsInUse = ['⭐']; // Stars in use
+  List<String> starsNotInUse = [
+    '⭐⭐',
+    '⭐⭐⭐',
+    '⭐⭐⭐⭐',
+    '⭐⭐⭐⭐⭐'
+  ]; // Stars not in use
 
   String selectedSignature = 'my signature';
   List<String> savedSignatures = ['my signature']; // Predefined signatures
@@ -54,103 +59,124 @@ class _GeneralSettingState extends State<GeneralSetting> {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Languages',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(8),
+              Text(
+                'Langauges:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 15,
+                ),
               ),
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Language:',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+              Container(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 180,
+                        ),
+                        Text(
+                          'Gmail display languages:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Container(
+                          width: 300,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                            ),
+                            // borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            value: selectedLanguage,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedLanguage = newValue ?? 'English';
+                              });
+                            },
+                            items: languages.map((String language) {
+                              return DropdownMenuItem<String>(
+                                value: language,
+                                child: Text(language),
+                              );
+                            }).toList(),
+                            menuMaxHeight: 300,
+                            underline: Container(),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Change language settings for other Google products',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  DropdownButton<String>(
-                    value: selectedLanguage,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedLanguage = newValue ?? 'English';
-                      });
-                    },
-                    items: languages.map((String language) {
-                      return DropdownMenuItem<String>(
-                        value: language,
-                        child: Text(language),
-                      );
-                    }).toList(),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Gmail display language:',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  DropdownButton<String>(
-                    value: selectedGmailLanguage,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedGmailLanguage = newValue ?? 'English';
-                      });
-                    },
-                    items: languages.map((String language) {
-                      return DropdownMenuItem<String>(
-                        value: language,
-                        child: Text(language),
-                      );
-                    }).toList(),
-                  ),
-                  SizedBox(height: 20),
-                  CheckboxListTile(
-                    title: Text('Enable input tools'),
-                    value: enableInputTools,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        enableInputTools = value ?? false;
-                      });
-                    },
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Right-to-left editing support:',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Column(
-                    children: [
-                      RadioListTile<String>(
-                        title: Text('Right-to-left editing support off'),
-                        value: 'Right-to-left editing support off',
-                        groupValue: selectedEditingSupport,
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedEditingSupport = value ?? '';
-                          });
-                        },
+                    SizedBox(
+                      width: 1160,
+                      height: 50,
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: enableInputTools,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                enableInputTools = value ?? false;
+                              });
+                            },
+                          ),
+                          Text(
+                            'Enable input tools ',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                              '- Use various text input tools to type in the language of your choice - '),
+                          Text(
+                            'Learn more',
+                            style: TextStyle(color: Colors.blue),
+                          )
+                        ],
                       ),
-                      RadioListTile<String>(
+                    ),
+                    SizedBox(
+                      width: 1160,
+                      height: 50,
+                      child: Column(
+                        children: [
+                          RadioListTile<String>(
+                            title: Text('Right-to-left editing support off'),
+                            value: 'Right-to-left editing support off',
+                            groupValue: selectedEditingSupport,
+                            onChanged: (String? value) {
+                              setState(() {
+                                selectedEditingSupport = value ?? '';
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 1160,
+                      height: 50,
+                      child: RadioListTile<String>(
                         title: Text('Right-to-left editing support on'),
                         value: 'Right-to-left editing support on',
                         groupValue: selectedEditingSupport,
@@ -160,353 +186,348 @@ class _GeneralSettingState extends State<GeneralSetting> {
                           });
                         },
                       ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Phone numbers :",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 180,
+                      ),
+                      Text(
+                        'Defualt Country Code :',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 300,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              // color: Colors.black,
+                              ),
+                          // borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          value: selectedCountry,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedCountry = newValue ?? 'United States';
+                            });
+                          },
+                          items: countries.map((String country) {
+                            return DropdownMenuItem<String>(
+                              value:
+                                  country, // Use the current country as the value
+                              child: Text(country),
+                            );
+                          }).toList(),
+                          menuMaxHeight: 300,
+                          underline: Container(),
+                        ),
+                      ),
                     ],
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Phone Numbers',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(8),
+              Text(
+                'Stars :',
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Column(
                 children: [
-                  Text(
-                    'Default country code:',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  DropdownButton<String>(
-                    value: selectedCountry,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedCountry = newValue ?? 'United States';
-                      });
-                    },
-                    items: countries.map((String country) {
-                      return DropdownMenuItem<String>(
-                        value: country,
-                        child: Text(country),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Signatures',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Signature:',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      DropdownButton<String>(
-                        value: selectedSignature,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedSignature = newValue ?? 'my signature';
-                          });
-                        },
-                        items: savedSignatures.map((String signature) {
-                          return DropdownMenuItem<String>(
-                            value: signature,
-                            child: Text(signature),
-                          );
-                        }).toList(),
+                      SizedBox(
+                        width: 180,
                       ),
-                      Row(
+                      Text(
+                        'Drag the stars between the lists.',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                          '  The stars will rotate in the order shown below when you click successively. To learn the name of a star for search, hover your mouse over the image.')
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    child: SizedBox(
+                      width: 1145,
+                      height: 50,
+                      child: Row(
                         children: [
-                          IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
-                              // Open text editing for selected signature
-                              // Provide options for fonts, bold text, etc.
-                            },
+                          Text('Preset:'),
+                          SizedBox(
+                            width: 10,
                           ),
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () {
-                              // Delete selected signature
-                            },
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              '1 star',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              '4 star',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'all stars',
+                              style: TextStyle(color: Colors.blue),
+                            ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Add New Signature:',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          onChanged: (value) {
-                            newSignature = value;
+                  SizedBox(
+                    width: 1150,
+                    height: 40,
+                    child: Row(
+                      children: [
+                        Text('In use:'),
+                        SizedBox(width: 10),
+                        DragTarget<String>(
+                          builder: (context, candidateData, rejectedData) {
+                            return Wrap(
+                              spacing: 5,
+                              children: starsInUse.map((star) {
+                                return Draggable<String>(
+                                  data: star,
+                                  child: Text(star),
+                                  feedback: Material(
+                                    child: Text(star),
+                                  ),
+                                  childWhenDragging: Container(),
+                                );
+                              }).toList(),
+                            );
                           },
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Enter new signature',
-                          ),
+                          onWillAccept: (data) {
+                            return true;
+                          },
+                          onAccept: (data) {
+                            setState(() {
+                              starsInUse.add(data!);
+                              starsNotInUse.remove(data);
+                            });
+                          },
                         ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () {
-                          // Add new signature to the list
-                          setState(() {
-                            savedSignatures.add(newSignature);
-                            selectedSignature = newSignature;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Signature Defaults',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      ],
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('For New Emails Use:'),
-                      DropdownButton<String>(
-                        value: 'my signature', // Default value
-                        onChanged: (String? newValue) {
-                          // Handle dropdown selection
-                        },
-                        items: savedSignatures.map((String signature) {
-                          return DropdownMenuItem<String>(
-                            value: signature,
-                            child: Text(signature),
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('On Reply/Forward Use:'),
-                      DropdownButton<String>(
-                        value: 'my signature', // Default value
-                        onChanged: (String? newValue) {
-                          // Handle dropdown selection
-                        },
-                        items: savedSignatures.map((String signature) {
-                          return DropdownMenuItem<String>(
-                            value: signature,
-                            child: Text(signature),
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: insertBeforeQuotedText,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            insertBeforeQuotedText = value ?? false;
-                          });
-                        },
-                      ),
-                      Text('Insert signature before quoted text in replies'),
-                    ],
+                  SizedBox(
+                    width: 1150,
+                    height: 40,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Not in use:',
+                        ),
+                        SizedBox(width: 10),
+                        DragTarget<String>(
+                          builder: (context, candidateData, rejectedData) {
+                            return Wrap(
+                              spacing: 5,
+                              children: starsNotInUse.map((star) {
+                                return Draggable<String>(
+                                  data: star,
+                                  child: Text(star),
+                                  feedback: Material(
+                                    child: Text(star),
+                                  ),
+                                  childWhenDragging: Container(),
+                                );
+                              }).toList(),
+                            );
+                          },
+                          onWillAccept: (data) {
+                            return true;
+                          },
+                          onAccept: (data) {
+                            setState(() {
+                              starsNotInUse.add(data!);
+                              starsInUse.remove(data);
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Stars',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Drag the stars between the lists.',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-            Text(
-              'The stars will rotate in the order shown below when you click successively. To learn the name of a star for search, hover your mouse over the image. ',
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Text(
-                  'In use:',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              Text(
+                'Signature:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Column(
+                children: [
+                  Text(
+                    '(appended at the end of all outgoing messages)',
+                    style: TextStyle(fontSize: 10),
                   ),
-                ),
-                SizedBox(width: 10),
-                DragTarget<String>(
-                  builder: (context, candidateData, rejectedData) {
-                    return Wrap(
-                      spacing: 5,
-                      children: starsInUse.map((star) {
-                        return Draggable<String>(
-                          data: star,
-                          child: Text(star),
-                          feedback: Material(
-                            child: Text(star),
-                          ),
-                          childWhenDragging: Container(),
-                        );
-                      }).toList(),
+                ],
+              ),
+              TextButton(onPressed: () {}, child: Text('Learn more')),
+              SizedBox(height: 10),
+  
+              SizedBox(
+  child: Row(
+    children: [
+      SizedBox(
+        width: 180,
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            color: Colors.grey[200],
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Your Current Signature',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      // Handle edit signature action
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      // Handle delete signature action
+                    },
+                  ),
+                ],
+              ),
+              
+              SizedBox(height: 10),
+              Container(
+                height: 150,
+                child: ListView.builder(
+                  itemCount: savedSignatures.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(savedSignatures[index]),
                     );
                   },
-                  onWillAccept: (data) {
-                    return true;
-                  },
-                  onAccept: (data) {
-                    setState(() {
-                      starsInUse.add(data!);
-                      starsNotInUse.remove(data);
-                    });
-                  },
                 ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Text(
-                  'Not in use:',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              ),
+                                        SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  // Handle create new signature action
+                },
+                child: Text('+  Create New',),
+              ),
+
+            ],
+          ),
+        ),
+        
+      ),
+      
+      SizedBox(
+        width: 20,
+      ),
+      Expanded(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.all(10),
+          width: 200,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            color: Colors.grey[200],
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Write Your New Signature',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  // Add additional buttons/icons for changing font, bold, underline, etc.
+                  IconButton(
+                    icon: Text('B'),
+                    onPressed: () {
+                      // Handle bold action
+                    },
+                  ),
+                  IconButton(
+                    icon: Text('U'),
+                    onPressed: () {
+                      // Handle underline action
+                    },
+                  ),
+                  // Add more buttons/icons as needed
+                ],
+              ),
+              SizedBox(height: 10),
+              Container(
+                height: 150,
+                // Add widgets for writing new signature (text input, formatting buttons, etc.)
+                child: TextField(
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Write your new signature here...',
                   ),
                 ),
-                SizedBox(width: 10),
-                DragTarget<String>(
-                  builder: (context, candidateData, rejectedData) {
-                    return Wrap(
-                      spacing: 5,
-                      children: starsNotInUse.map((star) {
-                        return Draggable<String>(
-                          data: star,
-                          child: Text(star),
-                          feedback: Material(
-                            child: Text(star),
-                          ),
-                          childWhenDragging: Container(),
-                        );
-                      }).toList(),
-                    );
-                  },
-                  onWillAccept: (data) {
-                    return true;
-                  },
-                  onAccept: (data) {
-                    setState(() {
-                      starsNotInUse.add(data!);
-                      starsInUse.remove(data);
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Presets:',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
               ),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      // Set preset to 1 star
-                      starsInUse = ['⭐'];
-                      starsNotInUse = ['⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'];
-                    });
-                  },
-                  child: Text('1 star'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      // Set preset to 4 stars
-                      starsInUse = ['⭐', '⭐', '⭐', '⭐'];
-                      starsNotInUse = ['⭐⭐⭐', '⭐⭐⭐⭐⭐'];
-                    });
-                  },
-                  child: Text('4 stars'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      // Set preset to all stars
-                      starsInUse = ['⭐', '⭐', '⭐', '⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'];
-                      starsNotInUse = [];
-                    });
-                  },
-                  child: Text('All stars'),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
+        ),
+      ),
+    ],
+  ),
+),
+            ],
+          ),
         ),
       ),
     );
@@ -514,7 +535,5 @@ class _GeneralSettingState extends State<GeneralSetting> {
 }
 
 void main() {
-  runApp(MaterialApp(
-    home: GeneralSetting(),
-  ));
+  runApp(const GeneralSetting());
 }
